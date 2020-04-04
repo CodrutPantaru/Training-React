@@ -1,0 +1,38 @@
+.Cocktail-card{
+    height:220px;
+    width:220px;
+    text-align: center;
+    display: inline-block;
+    padding:16px;
+    &-image{
+        width:calc(100% - 70px);
+        height:calc(100% - 70px);
+        &:hover{
+                width:calc(100% - 50px);
+                height:calc(100% - 50px);
+                cursor: pointer;
+                transition: .5s;
+        }
+    }
+    &-title{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width:100%;
+        white-space: pre;
+        height:40px;
+        border: 1px solid grey;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        &-text{
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        &:hover{
+            cursor: pointer;
+    }
+    }
+    
+}
+
