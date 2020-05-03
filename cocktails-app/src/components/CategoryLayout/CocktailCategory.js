@@ -1,40 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './CocktailCategory.scss';
 import axios from 'axios';
-import { CocktailCard } from '../Card/CocktailCard';
-import {Fab} from '@material-ui/core';
+import CocktailCard from '../Card/CocktailCard';
 
-export class CocktailCategory extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            drinks: [],
-            name: '',
-            api: '',
-            path: ''
-        }
-    }
+function CocktailCategory(props) {
+    const [drinks, setDrinks] = useState([]);
 
-    componentDidMount() {
-        axios.get(this.state.api).then(res => {
-            this.setState({
-                drinks: res.data.drinks
+    useEffect(() => {
+        if (!props.drinks) {
+            axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?${props.api}`).then(res => {
+                setDrinks(res.data.drinks);
             })
-        })
-    }
+        }else {
+            setDrinks(props.drinks);
+        }
+    }, [props.api, props.drinks])
 
-    render() {
-        return (
-            <div className="Cocktail-category">
-                <div className="Cocktail-category-header">
-                    {this.state.name}
-                </div>
-                <div className="Cocktail-list">
-                    {this.state.drinks.map(drink => <CocktailCard key={drink.idDrink} {...{ drink: drink, path: this.state.path, }}></CocktailCard>)}
-                </div>
-                {this.props.addUnavailable ? null :
-                <Fab className="floating-button" variant="round"> Add </Fab>}
+    return (
+        <div className="Cocktail-category">
+            <div className="Cocktail-category-header">
+                {props.name}
             </div>
-        );
-    }
+            <div className="Cocktail-list">
+                {drinks.map(drink => <CocktailCard key={drink.idDrink} {...{ drink: drink, path: props.path, }}></CocktailCard>)}
+            </div>
+        </div>
+    );
 }
+
+export default CocktailCategory;

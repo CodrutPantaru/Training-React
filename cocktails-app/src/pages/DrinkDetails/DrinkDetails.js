@@ -1,35 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './DrinkDetails.scss';
 import Axios from 'axios';
 import {Button} from '@material-ui/core';
 
-export class DrinkDetails extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            drink: {}
-        }
-    }
+function DrinkDetails(props) {
+    const [drink, setDrink] = useState({});
 
-    componentDidMount() {
-        Axios.get('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=' + this.props.match.params.id).then(res => {
-            this.setState({ drink: res.data.drinks[0] })
+    useEffect(() => {
+        Axios.get('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=' + props.match.params.id).then(res => {
+            setDrink(res.data.drinks[0])
         });
-    }
+    },[props.match])
 
-    render() {
         return <div className="wrapper">
             <div className="drink-details">
                 <div className="drink-details-title">
-                    {this.state.drink.strDrink}
+                    {drink.strDrink}
                 </div>
                 <div className="drink-details-image">
                     <img alt="something went wrong"
-                    src={this.state.drink.strDrinkThumb}>
+                    src={drink.strDrinkThumb}>
                     </img>
                 </div>
             </div>
-            <Button className="back-button" variant="contained" color="primary" onClick={()=> this.props.history.goBack()}> Go Back </Button>
+            <Button className="back-button" variant="contained" color="primary" onClick={()=> props.history.goBack()}> Go Back </Button>
         </div>
-    }
 }
+
+export default DrinkDetails;

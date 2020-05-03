@@ -1,26 +1,39 @@
 import React from 'react';
 import './MainPage.scss';
-import { AlcoholicCategory } from '../Categories/AlcoholicCategory';
-import { NonAlcoholicCategory } from '../Categories/NonAlcoholicCategory';
-import { OrdinaryCategory } from '../Categories/OrdinaryCategory';
-import { ChampagneFluteCategory } from '../Categories/ChampagneFluteCategory';
-import { CocktailGlassCategory } from '../Categories/CocktailGlassCategory';
+import ALCOHOLIC_CATEGORY from '../../constants/AlcoholicConstant';
+import NON_ALCOHOLIC_CATEGORY from '../../constants/NonAlcoholicConstant';
+import ORDINARY_CATEGORY from '../../constants/OrdinaryConstant';
+import COCKTAIL_GLASS_CATEGORY from '../../constants/CocktailGlassCategory';
+import CHAMPAGNE_FLUTE_CATEGORY from '../../constants/ChampagneFluteConstant';
+import CocktailCategory from '../../components/CategoryLayout/CocktailCategory';
+import AddCocktail from '../../components/AddCocktail/AddCocktail';
 
-export class MainPage extends React.Component {
-    render() {
-        return (
-            <div className="Main-page">
-                <div className="Main-page-search-input">
-                    <input></input>
-                </div>
-                <div className="Main-page-cocktail-list">
-                    <AlcoholicCategory addUnavailable={true}></AlcoholicCategory>
-                    <NonAlcoholicCategory addUnavailable={true}></NonAlcoholicCategory>
-                    <OrdinaryCategory addUnavailable={true}></OrdinaryCategory>
-                    <CocktailGlassCategory addUnavailable={true}></CocktailGlassCategory>
-                    <ChampagneFluteCategory addUnavailable={true}></ChampagneFluteCategory>
-                </div>
+function MainPage() {
+
+    const cocktailCategories = [
+        ALCOHOLIC_CATEGORY,
+        NON_ALCOHOLIC_CATEGORY,
+        ORDINARY_CATEGORY,
+        COCKTAIL_GLASS_CATEGORY,
+        CHAMPAGNE_FLUTE_CATEGORY
+    ]
+
+    return (
+        <div className="Main-page">
+            <div className="Main-page-search-input">
+                <input></input>
             </div>
-        );
-    }
+            <div className="Main-page-cocktail-list">
+            <AddCocktail></AddCocktail>
+                {
+                    cocktailCategories.map(category =>
+                        <CocktailCategory {...category}></CocktailCategory>
+                    )
+                }
+            </div>
+            
+        </div>
+    );
 }
+
+export default MainPage;

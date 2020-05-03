@@ -1,46 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './CocktailCard.scss';
 import { Redirect } from 'react-router-dom';
 
-export class CocktailCard extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            navigateFromImage: false,
-            navigateFromTitle: false
-        }
-    }
-    onImageClick = () => {
-        this.setState({ navigateFromImage: true })
-    }
+function CocktailCard(props) {
 
-    onTitleClick = () => {
-        this.setState({ navigateFromTitle: true });
-    }
+    const [navigateFromImage, setNavigateFromImage] = useState(false);
+    const [navigateFromTitle, setNavigateFromTitle] = useState(false);
 
-    render() {
+    const handleNavigationFromImage = () => setNavigateFromImage(true);
+    const handleNavigationFromTitle = () => setNavigateFromTitle(true);
+
         return (
             <div className="Cocktail-card">
-                {this.state.navigateFromImage ?
-                    <Redirect push to={this.props.path + '/' + this.props.drink.idDrink}></Redirect> :
+                {navigateFromImage ?
+                    <Redirect push to={props.path + '/' + props.drink.idDrink}></Redirect> :
                     <img className="Cocktail-card-image"
                         alt="something went wrong"
-                        src={this.props.drink.strDrinkThumb}
-                        onClick={this.onImageClick}
+                        src={props.drink.strDrinkThumb}
+                        onClick={handleNavigationFromImage}
                     ></img>}
                 {
-                    this.state.navigateFromTitle ?
+                    navigateFromTitle ?
                         <Redirect to="/"></Redirect> :
                         <div className="Cocktail-card-title"
-                            onClick={this.onTitleClick}
+                            onClick={handleNavigationFromTitle}
                         >
                             <div className="Cocktail-card-title-text">
-                                {this.props.drink.strDrink}
+                                {props.drink.strDrink}
                             </div>
                         </div>
                 }
 
             </div>
         )
-    }
 }
+
+export default CocktailCard;

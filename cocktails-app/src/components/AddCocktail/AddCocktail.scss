@@ -1,0 +1,17 @@
+.add-cocktail {
+    .floating-button {
+        background-color: rgba(250, 216, 89, 1);
+        position: fixed;
+        bottom: 64px;
+        font-weight: 600;
+        left: 24px;
+
+        &:hover {
+            cursor: pointer;
+            background-color: rgba(250, 216, 89, 0.7);
+            height: 70px;
+            width: 70px;
+            transition: 0.5s;
+        }
+    }
+}
